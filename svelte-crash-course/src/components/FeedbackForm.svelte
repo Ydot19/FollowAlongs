@@ -1,10 +1,9 @@
 <script>
-    import {createEventDispatcher} from "svelte"
+    import {FeedbackStore} from "../store"
     import Button from "./Button.svelte";
     import Card from "./Card.svelte"
     import RatingSelect from './RatingSelect.svelte'
 
-    let dispatch = createEventDispatcher()
     let text = ''
     let rating = 10
     let btnDisabled = true
@@ -31,9 +30,12 @@
                  rating: +rating  // to make it a number
              }
 
-             dispatch("add-feedback", newFeedback)
+             FeedbackStore.update((currentFeedback) => {
+                 return [newFeedback, ...currentFeedback]
+             })
 
             text = ''
+
         }
     }
 </script>
